@@ -85,3 +85,16 @@ def orders_list(request):
 
         return Response(status=status.HTTP_201_CREATED)
 
+@api_view(['GET','POST'])
+def customers(request):
+    if request.method == 'GET':
+        all_custs = Customer.objects.all()
+        serializer = CustomerSerializer(all_custs,many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        new_cust = CustomerSerializer(data=request.data)
+        if new_cust.is_valid():
+            new_cust.save()
+            return Response(new_cust.data,status=status.HTTP_201_CREATED)
+        return Response(new_cust.errors,status=status.HTTP_400_BAD_REQUEST)
+
