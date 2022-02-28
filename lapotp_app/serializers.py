@@ -56,3 +56,14 @@ class AddOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = '__all__'
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
+        # depth = 1
+
+class ReviewUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['laptop_grade','review_title','review_content']

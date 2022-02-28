@@ -5,3 +5,5 @@ admin.site.register(Laptop)
 admin.site.register(Order)
 admin.site.register(OrderItems)
 admin.site.register(Customer)
+admin.site.register(Review)
+

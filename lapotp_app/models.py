@@ -4,8 +4,8 @@ from django.db.models import RESTRICT
 
 
 class MetaModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    # created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    # updated_at = models.DateTimeField(auto_now=True,null=True,blank=True)
     is_deleted = models.BooleanField(default=False)
 
     class Meta:
@@ -39,7 +39,7 @@ class Laptop(MetaModel):
     os = models.CharField(max_length=128,null=False,blank=False)
     weight_kg = models.CharField(max_length=128,null=False,blank=False)
     price_euro = models.FloatField(null=False,blank=False)
-    stock_amount = models.IntegerField(max_length=128,null=False,blank=False,validators=([MinValueValidator(0), MaxValueValidator(100)]))
+    stock_amount = models.IntegerField(null=False,blank=False,validators=([MinValueValidator(0), MaxValueValidator(100)]))
 
     class Meta:
         db_table = 'laptops'
@@ -80,6 +80,28 @@ class OrderItems(MetaModel):
 
     def __str__(self):
         return f"{self.order} {self.amount} {self.laptop}"
+
+PRIOITIES = (
+    (1,1),
+    (2,2),
+    (3,3),
+    (4,4),
+    (5,5),
+)
+
+class Review(models.Model):
+    writer = models.ForeignKey(Customer,on_delete=RESTRICT)
+    laptop = models.ForeignKey(Laptop,on_delete=RESTRICT)
+    review_date = models.DateField(null=True,blank=True)
+    review_title = models.CharField(max_length=128,null=False,blank=False)
+    review_content = models.CharField(max_length=515, null=False, blank=False)
+    laptop_grade = models.IntegerField(max_length=128,choices=PRIOITIES)
+
+    class Meta:
+        db_table = 'reviews'
+
+    def __str__(self):
+        return f"{self.writer} on {self.laptop} grade {self.laptop_grade}"
 
 
 

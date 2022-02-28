@@ -15,8 +15,13 @@ from . import views
 
 
 urlpatterns = [
+    path('review/',views.review),
+    path('review/<int:pk>',views.review_by_id),
     path("laptops/", views.laptops_list),
     path("laptops/<int:pk>", views.laptop_details),
     path("orders/",views.orders_list),
     path("customers/",views.customers),
+    path('stats/best_laptops',views.best_laptops),
+    path('stats/manu_reviews',views.reviews_manufactorer),
+    path('stats/cheapest_rated',views.cheap_rate)
 ]
